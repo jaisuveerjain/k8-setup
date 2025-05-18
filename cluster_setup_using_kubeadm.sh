@@ -47,12 +47,12 @@ fi
 echo -e "\n-------------------------- Updating OS --------------------------\n"
 sudo apt update
 echo -e "\n-------------------------- APT transport for downloading pkgs via HTTPS --------------------------\n"
+sudo mkdir -p -m 755 /etc/apt/keyrings
 sudo apt-get install -y apt-transport-https ca-certificates curl gpg
 
 sudo su - <<EOF
 echo -e "\n--------------------------  Adding K8S packgaes to APT list --------------------------\n"
 echo -e "\n# If the directory `/etc/apt/keyrings` does not exist, it should be created before the curl command, read the note below. \n"
-mkdir -p -m 755 /etc/apt/keyrings
 curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.29/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
 echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.29/deb/ /' |  tee /etc/apt/sources.list.d/kubernetes.list
 EOF
