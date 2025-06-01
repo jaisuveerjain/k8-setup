@@ -53,8 +53,8 @@ sudo apt-get install -y apt-transport-https ca-certificates curl gpg
 sudo su - <<EOF
 echo -e "\n--------------------------  Adding K8S packgaes to APT list --------------------------\n"
 echo -e "\n# If the directory `/etc/apt/keyrings` does not exist, it should be created before the curl command, read the note below. \n"
-curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.29/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
-echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.29/deb/ /' |  tee /etc/apt/sources.list.d/kubernetes.list
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
 EOF
 
 echo -e "\n-------------------------- Installing docker.io --------------------------\n"
@@ -63,8 +63,8 @@ sudo apt install -y docker.io
 
 sudo su - <<EOF
 echo -e "\n-------------------------- Updating container.io --------------------------\n"
-wget -q https://github.com/containerd/containerd/releases/download/v1.6.12/containerd-1.6.12-linux-amd64.tar.gz
-tar -xf containerd-1.6.12-linux-amd64.tar.gz
+wget -q https://github.com/containerd/containerd/releases/download/v2.1.1/containerd-2.1.1-linux-amd64.tar.gz
+tar -xf containerd-2.1.1-linux-amd64.tar.gz
 systemctl stop containerd
 cd bin
 cp * /usr/bin/
